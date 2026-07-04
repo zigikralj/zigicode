@@ -1,0 +1,122 @@
+.about-section {
+    background: linear-gradient(180deg, var(--bg-color) 0%, rgba(15, 23, 42, 0.4) 100%);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .about-subtitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  .about-text {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .about-text strong {
+    color: var(--accent-mint);
+    font-weight: 600;
+  }
+
+  .about-pillars {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .pillar {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .pillar-icon {
+    font-size: 1.8rem;
+    background: rgba(139, 92, 246, 0.1);
+    padding: 0.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(139, 92, 246, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .pillar h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+  }
+
+  .pillar p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  /* Stats grid */
+  .about-stats-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding: 3rem;
+  }
+
+  /* Override glass panel hover behavior for a subtle effect */
+  .about-stats-panel:hover {
+    transform: none;
+    box-shadow: 0 10px 40px -20px var(--accent-neon-glow);
+  }
+
+  .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+  }
+
+  /* Responsive styling */
+  @media (max-width: 1024px) {
+    .about-grid {
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 4rem;
+    }
+
+    .about-stats-panel {
+      padding: 2rem;
+    }
+  }

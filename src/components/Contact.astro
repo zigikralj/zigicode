@@ -1,0 +1,119 @@
+---
+import '../styles/components/Contact.css';
+---
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Get in Touch</h2>
+    </div>
+
+    <div class="contact-grid">
+      <!-- Left side: Direct contact channels -->
+      <div class="contact-info">
+        <h3>Connect Directly</h3>
+        <p class="contact-sub">
+          Have an ambitious project in mind, or need senior-level reinforcement for your team? Let's discuss how we can build it.
+        </p>
+
+        <div class="contact-channels">
+          <!-- Email -->
+          <div class="channel-card">
+            <span class="channel-icon">✉️</span>
+            <div>
+              <h4>Email</h4>
+              <a href="mailto:nemanja@zigicode.com">nemanja@zigicode.com</a>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="channel-card">
+            <span class="channel-icon">📞</span>
+            <div>
+              <h4>Phone</h4>
+              <a href="tel:+381600000000">+381 (60) 000-0000</a>
+            </div>
+          </div>
+
+          <!-- LinkedIn -->
+          <div class="channel-card">
+            <span class="channel-icon">🔗</span>
+            <div>
+              <h4>LinkedIn</h4>
+              <a href="https://linkedin.com/in/nemanja-stanojevic" target="_blank" rel="noopener noreferrer">linkedin.com/in/nemanja-stanojevic</a>
+            </div>
+          </div>
+
+          <!-- GitHub -->
+          <div class="channel-card">
+            <span class="channel-icon">🐙</span>
+            <div>
+              <h4>GitHub</h4>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer">github.com/zigicode</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right side: Modern Feedback Form -->
+      <div class="contact-form-panel glass-panel">
+        <form class="contact-form" id="inquiry-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required placeholder="Nemanja Stanojevic" />
+            <span class="validation-message">Please enter your name</span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required placeholder="you@domain.com" />
+            <span class="validation-message">Please enter a valid email address</span>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project specifications..."></textarea>
+            <span class="validation-message">Please write a brief message</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary form-submit" id="submit-btn">
+            Send Inquiry
+          </button>
+        </form>
+        <div class="success-screen" id="success-screen">
+          <div class="success-icon">🚀</div>
+          <h3>Message Sent!</h3>
+          <p>Thank you for reaching out. Nemanja will review your request and get back to you within 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  const form = document.getElementById('inquiry-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn');
+  const successScreen = document.getElementById('success-screen');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    // Perform standard browser check
+    if (form.checkValidity()) {
+      // Simulate form submission
+      if (submitBtn) {
+        (submitBtn as HTMLButtonElement).disabled = true;
+        submitBtn.textContent = 'Sending...';
+      }
+
+      setTimeout(() => {
+        form.style.opacity = '0';
+        setTimeout(() => {
+          form.style.display = 'none';
+          successScreen?.classList.add('active');
+        }, 400);
+      }, 1000);
+    }
+  });
+</script>

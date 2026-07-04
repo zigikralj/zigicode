@@ -1,0 +1,122 @@
+---
+import '../styles/components/PenroseStairs.css';
+---
+<div class="stairs-wrapper">
+  <img src="/stairs.png" alt="Infinite Stairs" class="stairs-bg" />
+  <canvas id="stairs-canvas"></canvas>
+</div>
+
+
+
+<script>
+  function initStairs() {
+    const canvas = document.getElementById('stairs-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Use the native resolution of the original image to prevent stretching
+    canvas.width = 2119;
+    canvas.height = 986;
+
+    // Load custom SVG orb image from the public folder
+    const orbImg = new Image();
+    let isOrbLoaded = false;
+    orbImg.onload = () => {
+      isOrbLoaded = true;
+    };
+    orbImg.src = '/orb.svg';
+
+    // Coordinates mapped directly to the 2119x986 space based on your specific step counts
+    // (14 steps total: 2 RB, 2 LB, 5 LT, 5 RT)
+    // You can click on the steps to refine these in the console
+    const steps = [
+      { x: 1440, y: 128 }, // Step 0 (Top corner)
+      // Right-Bottom (2 stairs)
+      { x: 1670, y: 289 }, // Step 1
+      { x: 1900, y: 450 }, // Step 2 (Rightmost corner)
+      // Left-Bottom (2 stairs)
+      { x: 1650, y: 615 }, // Step 3
+      { x: 1400, y: 780 }, // Step 4 (Bottom corner)
+      // Left-Top (5 stairs)
+      { x: 1170, y: 710 }, // Step 5
+      { x: 939, y: 640 },  // Step 6
+      { x: 709, y: 570 },  // Step 7
+      { x: 478, y: 500 },  // Step 8
+      { x: 248, y: 430 },  // Step 9 (Leftmost corner)
+      // Right-Top (4 stairs back to top)
+      { x: 486, y: 370 },  // Step 10
+      { x: 725, y: 309 },  // Step 11
+      { x: 963, y: 249 },  // Step 12
+      { x: 1202, y: 188 }  // Step 13
+    ];
+
+    let speedMultiplier = 1;
+    let hoverState = false;
+    let orbProgress = 0;
+
+    const wrapper = canvas.closest('.stairs-wrapper');
+    wrapper?.addEventListener('mouseenter', () => hoverState = true);
+    wrapper?.addEventListener('mouseleave', () => hoverState = false);
+
+    // Coordinate helper: logs x,y when clicked to make positioning the orb trivial
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const clickX = Math.round(((e.clientX - rect.left) / rect.width) * canvas.width);
+      const clickY = Math.round(((e.clientY - rect.top) / rect.height) * canvas.height);
+      console.log(`Clicked step coordinate: { x: ${clickX}, y: ${clickY} }`);
+    });
+
+    function getOrbPosition(progress: number): { x: number; y: number } {
+      const currentIdx = Math.floor(progress) % steps.length;
+      const nextIdx = (currentIdx + 1) % steps.length;
+      
+      const p1 = steps[currentIdx];
+      const p2 = steps[nextIdx];
+      const t = progress - Math.floor(progress);
+      
+      const x = p1.x + (p2.x - p1.x) * t;
+      const bounce = Math.sin(t * Math.PI) * -70; // scaled bounce hop animation (higher)
+      const y = p1.y + (p2.y - p1.y) * t + bounce - 32; // scaled offset slightly above the step surface
+      
+      return { x, y };
+    }
+
+    function render() {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update speed (slower overall)
+      const targetSpeed = hoverState ? 1.4 : 0.8;
+      speedMultiplier += (targetSpeed - speedMultiplier) * 0.1;
+      orbProgress += 0.02 * speedMultiplier;
+      if (orbProgress >= steps.length) orbProgress = 0;
+
+      // Draw the orb SVG image on the canvas
+      const orbPos = getOrbPosition(orbProgress);
+
+      if (isOrbLoaded) {
+        // Draw the neon SVG core scaled (size 64px to represent the 32px radius)
+        const size = hoverState ? 128 : 100;
+        ctx.shadowColor = '#00ff66';
+        ctx.shadowBlur = hoverState ? 40 : 20;
+        ctx.drawImage(orbImg, orbPos.x - size / 2, orbPos.y - size / 2, size, size);
+      } else {
+        // Fallback to neon green circle if loading
+        ctx.beginPath();
+        ctx.arc(orbPos.x, orbPos.y, 16, 0, Math.PI * 2);
+        ctx.fillStyle = '#00ff66';
+        ctx.shadowColor = '#00ff66';
+        ctx.shadowBlur = hoverState ? 32 : 16;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  }
+
+  document.addEventListener('DOMContentLoaded', initStairs);
+  document.addEventListener('astro:page-load', initStairs);
+</script>

@@ -1,0 +1,198 @@
+.hero-wrapper {
+    position: relative;
+    height: 100vh;
+    min-height: 750px;
+    display: flex;
+    align-items: center;
+    overflow: clip; /* Clip layers moving beyond borders */
+    background-color: var(--bg-color);
+    padding-top: var(--header-height);
+    /* Native CSS Scroll timeline setup */
+    view-timeline: --hero-timeline;
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+    z-index: 10;
+    position: relative;
+    pointer-events: none; /* Let background canvas catch hover events */
+  }
+
+  /* Make interactive blocks in columns clickable */
+  .layer-text, .layer-graphic {
+    pointer-events: auto;
+  }
+
+  .parallax-layer {
+    transition: transform 0.1s ease-out; /* Smooth transition fallback */
+  }
+
+  /* Text styling */
+  .badge {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-mint);
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.15);
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.05);
+  }
+
+  .hero-title {
+    font-size: 3.8rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* Scroll Indicator animation */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.6;
+    animation: pulseScroll 2s infinite;
+  }
+
+  .mouse-icon {
+    width: 20px;
+    height: 32px;
+    border: 2px solid var(--text-muted);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .wheel {
+    width: 3px;
+    height: 6px;
+    background-color: var(--accent-mint);
+    border-radius: 2px;
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollWheel 1.5s infinite;
+  }
+
+  .scroll-indicator .label {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  @keyframes scrollWheel {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, 8px);
+    }
+  }
+
+  @keyframes pulseScroll {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+
+  /* CSS PARALLAX ANIMATIONS USING NATIVE SCROLL-DRIVEN ANIMATIONS */
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes parallaxBg {
+      to { transform: translateY(120px); }
+    }
+    @keyframes parallaxText {
+      to { transform: translateY(80px); }
+    }
+    @keyframes parallaxGraphic {
+      to { transform: translateY(-40px); }
+    }
+
+    .layer-bg {
+      animation: parallaxBg linear both;
+      animation-timeline: --hero-timeline;
+      animation-range: exit 0% exit 100%;
+    }
+
+    .layer-text {
+      animation: parallaxText linear both;
+      animation-timeline: --hero-timeline;
+      animation-range: exit 0% exit 100%;
+    }
+
+    .layer-graphic {
+      animation: parallaxGraphic linear both;
+      animation-timeline: --hero-timeline;
+      animation-range: exit 0% exit 100%;
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .hero-title {
+      font-size: 3rem;
+    }
+    .hero-container {
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-wrapper {
+      height: auto;
+      min-height: auto;
+      padding: 8rem 0 4rem 0;
+    }
+
+    .hero-container {
+      grid-template-columns: 1fr;
+      text-align: center;
+      gap: 3rem;
+    }
+
+    .hero-desc {
+      margin: 0 auto 2rem auto;
+    }
+
+    .hero-actions {
+      justify-content: center;
+    }
+    
+    .scroll-indicator {
+      display: none;
+    }
+  }

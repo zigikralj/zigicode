@@ -1,0 +1,85 @@
+---
+import CanvasDots from './CanvasDots.astro';
+import PenroseStairs from './PenroseStairs.astro';
+import '../styles/components/Hero.css';
+---
+
+<section class="hero-wrapper" id="hero">
+  <!-- Layer 0: Reactive Dots Canvas Background (Fixed/Slow Parallax) -->
+  <div class="parallax-layer layer-bg">
+    <CanvasDots />
+  </div>
+
+  <div class="container hero-container">
+    <!-- Layer 1: Left column - Title, description, CTAs -->
+    <div class="parallax-layer layer-text">
+      <div class="badge">Engineered for Scale</div>
+      <h1 class="hero-title">
+        We Architect <span class="gradient-text">Impossible</span> Solutions
+      </h1>
+      <p class="hero-desc">
+        Zigi Code is Nemanja Stanojevic's solo engineering laboratory. Building premium web apps, rock-solid APIs, and robust architectures that turn complex problems into elegant software.
+      </p>
+      <div class="hero-actions">
+        <a href="#services" class="btn btn-primary">Our Services</a>
+        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+
+    <!-- Layer 2: Right column - Infinite Stairs Illusion -->
+    <div class="parallax-layer layer-graphic">
+      <PenroseStairs />
+    </div>
+  </div>
+  
+  <div class="scroll-indicator">
+    <span class="mouse-icon">
+      <span class="wheel"></span>
+    </span>
+    <span class="label">Scroll to Explore</span>
+  </div>
+</section>
+
+
+
+<script>
+  // Fallback for browsers that don't support scroll-driven CSS animations (e.g., Firefox)
+  if (!CSS.supports('(animation-timeline: view()) and (animation-range: entry)')) {
+    const hero = document.getElementById('hero');
+    const layerBg = document.querySelector('.layer-bg') as HTMLElement;
+    const layerText = document.querySelector('.layer-text') as HTMLElement;
+    const layerGraphic = document.querySelector('.layer-graphic') as HTMLElement;
+
+    if (hero) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            window.addEventListener('scroll', onScroll);
+          } else {
+            window.removeEventListener('scroll', onScroll);
+          }
+        });
+      }, { threshold: 0 });
+
+      observer.observe(hero);
+
+      function onScroll() {
+        if (!hero) return;
+        const scrollY = window.scrollY;
+        const heroHeight = hero.offsetHeight;
+        
+        // Calculate scroll ratio (0 when scroll is at top, 1 when hero scrolls out of view)
+        if (scrollY <= heroHeight) {
+          const ratio = scrollY / heroHeight;
+          
+          // Apply staggered translates matching keyframes
+          if (layerBg) layerBg.style.transform = `translateY(${ratio * 120}px)`;
+          if (layerText) layerText.style.transform = `translateY(${ratio * 80}px)`;
+          if (layerGraphic) layerGraphic.style.transform = `translateY(${ratio * -40}px)`;
+        }
+      }
+      
+      onScroll(); // initial render
+    }
+  }
+</script>

@@ -1,0 +1,65 @@
+---
+import '../styles/components/Navbar.css';
+---
+<header class="navbar">
+  <div class="navbar-container container">
+    <a href="#" class="logo">
+      <img src="/logo.png" alt="Zigi Code Logo" class="logo-img" />
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-menu">
+      <a href="#about" class="nav-link">About</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#portfolio" class="nav-link">Work</a>
+      <a href="#contact" class="btn btn-secondary nav-cta">Contact</a>
+    </nav>
+
+    <!-- Mobile Hamburguer Button -->
+    <button class="mobile-menu-toggle" aria-label="Toggle Navigation Menu" id="mobile-toggle">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="#about" class="mobile-nav-link">About</a>
+    <a href="#services" class="mobile-nav-link">Services</a>
+    <a href="#portfolio" class="mobile-nav-link">Work</a>
+    <a href="#contact" class="btn btn-primary mobile-cta">Get in Touch</a>
+  </nav>
+</header>
+
+
+
+<script>
+  const toggleBtn = document.getElementById('mobile-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link, .mobile-cta');
+
+  // Toggle menu
+  toggleBtn?.addEventListener('click', () => {
+    toggleBtn.classList.toggle('active');
+    mobileMenu?.classList.toggle('active');
+  });
+
+  // Close menu when a link is clicked
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      toggleBtn?.classList.remove('active');
+      mobileMenu?.classList.remove('active');
+    });
+  });
+
+  // Scroll detection to add class for styling navbar when scrolled
+  const navbar = document.querySelector('.navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
+    }
+  });
+</script>

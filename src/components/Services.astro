@@ -1,0 +1,102 @@
+---
+import '../styles/components/Services.css';
+---
+<section id="services" class="services-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Expertise & Services</h2>
+    </div>
+
+    <div class="services-grid">
+      <!-- Service Card 1 -->
+      <div class="service-card glass-panel">
+        <div class="card-glow"></div>
+        <div class="service-header">
+          <div class="service-icon icon-purple">🖥️</div>
+          <h3>Full-Stack Web Dev</h3>
+        </div>
+        <p class="service-desc">
+          Crafting modern, lightning-fast web applications. Utilizing framework choices like Astro and Next.js combined with robust state management to score perfect Core Web Vitals.
+        </p>
+        <ul class="service-tags">
+          <li>Astro</li>
+          <li>Next.js</li>
+          <li>TypeScript</li>
+          <li>CSS Grid</li>
+        </ul>
+      </div>
+
+      <!-- Service Card 2 -->
+      <div class="service-card glass-panel">
+        <div class="card-glow"></div>
+        <div class="service-header">
+          <div class="service-icon icon-cyan">⚙️</div>
+          <h3>Backend & API Systems</h3>
+        </div>
+        <p class="service-desc">
+          Designing scalable, type-safe API endpoints and microservices architectures. Experts in transactional safety, relational database optimization, caching, and robust authentication layers.
+        </p>
+        <ul class="service-tags">
+          <li>Node.js</li>
+          <li>Go</li>
+          <li>PostgreSQL</li>
+          <li>Redis</li>
+        </ul>
+      </div>
+
+      <!-- Service Card 3 -->
+      <div class="service-card glass-panel">
+        <div class="card-glow"></div>
+        <div class="service-header">
+          <div class="service-icon icon-indigo">☁️</div>
+          <h3>Cloud & Devops</h3>
+        </div>
+        <p class="service-desc">
+          Automating continuous integration and continuous deployment pipelines (CI/CD). Configuring secure, scalable, and immutable infrastructure as code (IaC) on AWS or GCP.
+        </p>
+        <ul class="service-tags">
+          <li>Docker</li>
+          <li>AWS</li>
+          <li>GitHub Actions</li>
+          <li>Terraform</li>
+        </ul>
+      </div>
+
+      <!-- Service Card 4 -->
+      <div class="service-card glass-panel">
+        <div class="card-glow"></div>
+        <div class="service-header">
+          <div class="service-icon icon-magenta">📱</div>
+          <h3>Mobile Engineering</h3>
+        </div>
+        <p class="service-desc">
+          Developing native iOS applications using Swift and SwiftUI, delivering pixel-perfect, highly responsive interfaces that match system aesthetics and integrate hardware seamlessly.
+        </p>
+        <ul class="service-tags">
+          <li>Swift</li>
+          <li>SwiftUI</li>
+          <li>Native iOS</li>
+          <li>Combine</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  // Dynamic glow tracking for cards
+  const cards = document.querySelectorAll('.service-card');
+  
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e as MouseEvent).clientX - rect.left;
+      const y = (e as MouseEvent).clientY - rect.top;
+      
+      (card as HTMLElement).style.setProperty('--mouse-x', `${x}px`);
+      (card as HTMLElement).style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
+</script>

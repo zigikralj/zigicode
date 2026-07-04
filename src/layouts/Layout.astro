@@ -1,0 +1,67 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Zigi Code | Elite Software Engineering Agency", 
+  description = "Zigi Code is a solo software engineering consultancy by Nemanja Stanojevic, specializing in high-performance web applications, robust backends, and cloud solutions."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- SEO Metadata -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- OpenGraph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://zigicode.com" />
+    
+    <!-- Google Fonts: Orbitron & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // Scroll reveal Intersection Observer for section headers
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -10% 0px', // Trigger slightly before the section reaches the middle
+        threshold: 0.15 // Trigger when 15% of the section is visible
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          } else {
+            // Remove class when scrolled out to allow re-triggering the animation
+            entry.target.classList.remove('in-view');
+          }
+        });
+      }, observerOptions);
+
+      // Observe all sections
+      document.querySelectorAll('section').forEach((section) => {
+        observer.observe(section);
+      });
+    </script>
+  </body>
+</html>
