@@ -18,6 +18,5 @@ jobs:
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
-        # If you use npm or yarn instead of pnpm, you can specify it here:
-        # with:
-        #   package-manager: npm
+        with:
+          package-manager: pnpm
