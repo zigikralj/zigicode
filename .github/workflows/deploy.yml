@@ -20,3 +20,4 @@ jobs:
         uses: withastro/action@v3
         with:
           package-manager: pnpm
+          node-version: 22
