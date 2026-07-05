@@ -2,7 +2,7 @@
 import '../styles/components/PenroseStairs.css';
 ---
 <div class="stairs-wrapper">
-  <img src="/stairs.png" alt="Infinite Stairs" class="stairs-bg" />
+  <img src={`${import.meta.env.BASE_URL}stairs.png`} alt="Infinite Stairs" class="stairs-bg" />
   <canvas id="stairs-canvas"></canvas>
 </div>
 
@@ -25,7 +25,7 @@ import '../styles/components/PenroseStairs.css';
     orbImg.onload = () => {
       isOrbLoaded = true;
     };
-    orbImg.src = '/orb.svg';
+    orbImg.src = import.meta.env.BASE_URL + 'orb.svg';
 
     // Coordinates mapped directly to the 2119x986 space based on your specific step counts
     // (14 steps total: 2 RB, 2 LB, 5 LT, 5 RT)
